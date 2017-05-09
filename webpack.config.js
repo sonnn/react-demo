@@ -4,6 +4,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackPlugins = [
   new ExtractTextPlugin('style.css'),
+  new webpack.optimize.OccurrenceOrderPlugin(true),
+  new webpack.DllReferencePlugin({
+    context: __dirname,
+    manifest: require(path.join(__dirname, './public/dist/lib/library-manifest.json'))
+  })
 ];
 
 const webpackConfig = {
