@@ -18,6 +18,7 @@ $ npm run dev
 Build
 
 ```sh
+$ webpack --config=dll.webpack.config.js // this will help improve the loading time
 $ npm run build
 ```
 Run
@@ -27,4 +28,5 @@ $ npm start
 ```
 
 Live Demo
+
 https://powerful-peak-33567.herokuapp.com/
