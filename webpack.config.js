@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const express = require('express');
 
 const webpackPlugins = [
   new ExtractTextPlugin('style.css'),
@@ -42,8 +43,12 @@ const webpackConfig = {
   },
   devServer: {
     contentBase: './public',
-    historyApiFallback: true,
+    historyApiFallback: false,
     stats: 'minimal',
+    setup: (app) => {
+      // interesting
+      app.use('/assets/lib/', express.static(path.join(__dirname, 'public', 'dist', 'lib')));
+    }
   },
   plugins: webpackPlugins,
 };
