@@ -46,8 +46,11 @@ const webpackConfig = {
     historyApiFallback: false,
     stats: 'minimal',
     setup: (app) => {
+      const indexPath = path.join(__dirname, './public/index.html');
       // interesting
       app.use('/assets/lib/', express.static(path.join(__dirname, 'public', 'dist', 'lib')));
+      app.get('/profile/*', (req, res) => { res.sendFile(indexPath) });
+      app.get('/', (req, res) => { res.sendFile(indexPath) });
     }
   },
   plugins: webpackPlugins,

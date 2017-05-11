@@ -1142,11 +1142,12 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 var GitUser = function GitUser(_ref) {
   var user = _ref.user,
-      onClick = _ref.onClick;
+      onClick = _ref.onClick,
+      isSelected = _ref.isSelected;
 
   return _react2.default.createElement(
     'li',
-    { className: 'git-user', onClick: onClick },
+    { className: 'git-user ' + (isSelected ? 'selected' : ''), onClick: onClick },
     _react2.default.createElement(
       'span',
       { className: 'image' },
@@ -1176,6 +1177,7 @@ var SearchBox = (_class = function (_Component) {
     };
 
     _this.timeout = null;
+    _this.onKeydown = null;
     _this.searchURL = 'https://api.github.com/search/users?q=';
     return _this;
   }
@@ -1209,14 +1211,62 @@ var SearchBox = (_class = function (_Component) {
       this.props.history.push('/profile/' + user.login);
     }
   }, {
-    key: 'render',
-    value: function render() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       var _this4 = this;
 
-      var _state = this.state,
-          list = _state.list,
-          selected = _state.selected,
-          isOpen = _state.isOpen;
+      this.onKeydown = document.addEventListener('keydown', function (event) {
+        var _state = _this4.state,
+            list = _state.list,
+            selected = _state.selected;
+
+
+        if (event.keyCode === 38) {
+          // up
+          var select = null;
+
+          if (list && list.length > 0) {
+            if (!selected) select = list[list.length - 1];else {
+              var index = list.findIndex(function (f) {
+                return f && f.login === selected.login;
+              });
+              if (index === 0) select = list[list.length - 1];else select = list[--index];
+            }
+          }
+          _this4.setState({ selected: select });
+        } else if (event.keyCode === 40) {
+          // down
+          var _select = null;
+
+          if (list && list.length > 0) {
+            if (!selected) _select = list[0];else {
+              var _index = list.findIndex(function (f) {
+                return f && f.login === selected.login;
+              });
+              if (_index === list.length) _select = list[0];else _select = list[++_index];
+            }
+          }
+          _this4.setState({ selected: _select });
+        } else if (event.keyCode === 13) {
+          // enter
+          _this4.props.history.push('/profile/' + selected.login);
+        }
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      document.removeEventListener('keydown', this.onKeydown);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      var _state2 = this.state,
+          list = _state2.list,
+          selected = _state2.selected,
+          isOpen = _state2.isOpen;
 
 
       return _react2.default.createElement(
@@ -1229,7 +1279,9 @@ var SearchBox = (_class = function (_Component) {
             type: 'text',
             placeholder: 'Who are you looking for?',
             onChange: this.changeHandler,
-            onFocus: this.state.list.length > 0 && !this.state.isOpen ? this.setState({ isOpen: true }) : false
+            onFocus: function onFocus() {
+              if (_this5.state.list.length > 0 && !_this5.state.isOpen) _this5.setState({ isOpen: true });
+            }
           }),
           isOpen ? _react2.default.createElement(
             'div',
@@ -1242,13 +1294,17 @@ var SearchBox = (_class = function (_Component) {
                   key: gitUser.login,
                   user: gitUser,
                   onClick: function onClick() {
-                    return _this4.viewProfile(gitUser);
-                  }
+                    return _this5.viewProfile(gitUser);
+                  },
+                  isSelected: selected && gitUser.login === selected.login
                 });
               }) : null
             )
           ) : null
-        )
+        ),
+        !isOpen ? null : _react2.default.createElement('div', { className: 'mask', onClick: function onClick() {
+            return _this5.setState({ isOpen: !_this5.state.isOpen });
+          } })
       );
     }
   }]);

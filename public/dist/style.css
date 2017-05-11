@@ -8,7 +8,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  border: 1px solid red;
   width: 100%;
   height: 100%;
   z-index: 99;
@@ -47,6 +46,9 @@
   height: 40px;
   line-height: 40px;
   width: 100%;
+}
+.search-box-wrapper .search-box .drop-down-wrapper ul.drop-down li.selected {
+  background: gray;
 }
 .search-box-wrapper .search-box .drop-down-wrapper ul.drop-down li .image img {
   max-height: 30px;
