@@ -1,5 +1,6 @@
 # React demo
-
+[![dependencies Status](https://david-dm.org/sonnn/repocompare/status.svg)](https://github.com/sonnn/react-demo)
+[![devDependencies Status](https://david-dm.org/sonnn/repocompare/dev-status.svg)](https://github.com/sonnn/react-demo?type=dev)
 
 ### Dev
 
