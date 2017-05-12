@@ -48,7 +48,7 @@ export default class SearchBox extends Component {
   }
 
   viewProfile(user) {
-    this.props.history.push(`/profile/${user.login}`);
+    if (user && user.login) this.props.history.push(`/profile/${user.login}`);
   }
 
   componentDidMount() {
@@ -83,7 +83,7 @@ export default class SearchBox extends Component {
         this.setState({ selected: select });
       } else if (event.keyCode === 13) {
         // enter
-        this.props.history.push(`/profile/${selected.login}`);
+        this.viewProfile(selected);
       }
     });
   }

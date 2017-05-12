@@ -810,8 +810,6 @@ var _root2 = _interopRequireDefault(_root);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _reactDom.render)(_react2.default.createElement(_root2.default, null), document.getElementById('root'));
-/* eslint-enable import/no-unresolved */
-/* eslint-disable import/no-unresolved */
 
 /***/ }),
 /* 36 */
@@ -1208,7 +1206,7 @@ var SearchBox = (_class = function (_Component) {
   }, {
     key: 'viewProfile',
     value: function viewProfile(user) {
-      this.props.history.push('/profile/' + user.login);
+      if (user && user.login) this.props.history.push('/profile/' + user.login);
     }
   }, {
     key: 'componentDidMount',
@@ -1249,7 +1247,7 @@ var SearchBox = (_class = function (_Component) {
           _this4.setState({ selected: _select });
         } else if (event.keyCode === 13) {
           // enter
-          _this4.props.history.push('/profile/' + selected.login);
+          _this4.viewProfile(selected);
         }
       });
     }
