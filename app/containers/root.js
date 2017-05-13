@@ -9,7 +9,6 @@ const Root = ({ store }) => {
     <Router>
       <div style={{ height: '100%' }}>
         <Route exact path="/" component={Home}/>
-        <Redirect from="/profile/" to="/"/>
         <Route exact path="/profile/:user" component={Profile}/>
       </div>
     </Router>
