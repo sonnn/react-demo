@@ -1348,7 +1348,6 @@ var Root = function Root(_ref) {
       'div',
       { style: { height: '100%' } },
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _homepage2.default }),
-      _react2.default.createElement(_reactRouterDom.Redirect, { from: '/profile/', to: '/' }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile/:user', component: _profilepage2.default })
     )
   );
